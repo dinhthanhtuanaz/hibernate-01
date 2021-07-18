@@ -17,13 +17,14 @@ public class Management {
 		try {
 			Session session = sessionFactory.openSession();
 			session.beginTransaction();
-//			session.save(fresher);
+//			Fresher fresher2 = new Fresher("New Fresher 3");
+//			session.save(fresher2);
 //			session.getTransaction().commit();
 			
 			//Get data from db
 			//session.get sẽ sử dụng constructor ko tham số rồi gắn qua fresher1
-			Fresher fresher1 = (Fresher) session.get(Fresher.class, 11);
-			System.out.println(fresher1.getName());
+//			Fresher fresher1 = (Fresher) session.get(Fresher.class, 11);
+//			System.out.println(fresher1.getName());
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
