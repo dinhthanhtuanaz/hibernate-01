@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 @Entity
@@ -16,13 +17,16 @@ public class Fresher {
 	@Column(name = "name", unique = true)
 	private String name;
 	
+	@OneToOne
+	private FresherDetail fresherDetail;
+	
 	public Fresher() {
 	}
 	
-	public Fresher(int id, String name) {
+	public Fresher(String name, FresherDetail fresherDetail) {
 		super();
-		this.id = id;
 		this.name = name;
+		this.fresherDetail = fresherDetail;
 	}
 
 	public Fresher(String name) {
@@ -43,5 +47,13 @@ public class Fresher {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public FresherDetail getFresherDetail() {
+		return fresherDetail;
+	}
+
+	public void setFresherDetail(FresherDetail fresherDetail) {
+		this.fresherDetail = fresherDetail;
 	}
 }
