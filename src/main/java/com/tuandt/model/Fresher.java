@@ -1,13 +1,16 @@
 package com.tuandt.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
@@ -27,6 +30,9 @@ public class Fresher {
 	@OneToMany
 	private List<Address> addresses = new ArrayList<>();
 	
+	@ManyToMany
+	private Set<Course> courses = new HashSet<>();
+	
 	public Fresher() {
 	}
 	
@@ -34,6 +40,12 @@ public class Fresher {
 		super();
 		this.name = name;
 		this.fresherDetail = fresherDetail;
+	}
+	
+	public Fresher(String name, Set<Course> courses) {
+		super();
+		this.name = name;
+		this.courses = courses;
 	}
 	
 	public Fresher(String name, FresherDetail fresherDetail, List<Address> addresses) {
@@ -77,5 +89,13 @@ public class Fresher {
 
 	public void setAddresses(List<Address> addresses) {
 		this.addresses = addresses;
+	}
+
+	public Set<Course> getCourses() {
+		return courses;
+	}
+
+	public void setCourses(Set<Course> courses) {
+		this.courses = courses;
 	}
 }
