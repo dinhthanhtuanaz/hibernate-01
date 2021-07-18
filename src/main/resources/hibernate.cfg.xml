@@ -18,6 +18,7 @@
 		
 		<mapping class="com.tuandt.model.Fresher" />
 		<mapping class="com.tuandt.model.FresherDetail" />
+		<mapping class="com.tuandt.model.Address" />
 	</session-factory>
 
 </hibernate-configuration>
