@@ -13,21 +13,22 @@ public class Management {
 	public static void main(String[] args) {
 		Fresher fresher = new Fresher(12, "TuanDT 12");
 		System.out.println(fresher.getName());
-		Configuration configuration = new Configuration();
-		configuration.configure();
-		ServiceRegistry registry = new StandardServiceRegistryBuilder()
-				.applySettings(configuration.getProperties())
-				.build();
-		SessionFactory sessionFactory = configuration.buildSessionFactory(registry);
-		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-//		session.save(fresher);
-//		session.getTransaction().commit();
+		SessionFactory sessionFactory = ConnectionUtil.getSessionFactory();
+		try {
+			Session session = sessionFactory.openSession();
+			session.beginTransaction();
+//			session.save(fresher);
+//			session.getTransaction().commit();
+			
+			//Get data from db
+			//session.get sẽ sử dụng constructor ko tham số rồi gắn qua fresher1
+			Fresher fresher1 = (Fresher) session.get(Fresher.class, 11);
+			System.out.println(fresher1.getName());
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
 		
-		//Get data from db
-		//session.get sẽ sử dụng constructor ko tham số rồi gắn qua fresher1
-		Fresher fresher1 = (Fresher) session.get(Fresher.class, 10);
-		System.out.println(fresher1.getName());
-		sessionFactory.close();
+		//dù có lỗi thì bắn lỗi vào catch & sessionFactory vẫn phải được close.
+		ConnectionUtil.getSessionFactory().close();
 	}
 }
