@@ -60,4 +60,9 @@ public class Course {
 	public void setFreshers(Set<Fresher> freshers) {
 		this.freshers = freshers;
 	}
+	
+	@Override
+	public String toString() {
+		return "ID: " + id + "-" + name;
+	}
 }

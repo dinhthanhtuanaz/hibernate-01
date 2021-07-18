@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -22,7 +23,37 @@ public class Management {
 	public static void main(String[] args) {
 		//createFresher();
 		createFresherAndCourse();
-		//ConnectionUtil.getSessionFactory().close();
+		readCourseWithHQL();
+		ConnectionUtil.getSessionFactory().close();
+	}
+
+	private static void readCourseWithHQL() {
+		SessionFactory sessionFactory = ConnectionUtil.getSessionFactory();
+		try {
+			Session session = sessionFactory.openSession();
+			session.beginTransaction();
+			//course này trùng với @Entity defined => Chứ ko cần trùng với @Table
+			//chỗ này để course là ko đúng => Sẽ bị course is not mapped
+			//phải để đúng là Course (Vì mapped với Entity mà)
+			
+			
+			/* Condition Binding 
+			String queryStr = "FROM Course WHERE id = ? AND name like ?";
+			Query query = session.createQuery(queryStr);
+			query.setInteger(0, 1);
+			query.setString(1, "%ourse%");
+			*/
+			
+			// Named Query Parameters
+			String queryStr = "SELECT name FROM Course WHERE id = :id AND name like :name";
+			Query query = session.createQuery(queryStr);
+			query.setParameter("id", 1);
+			query.setParameter("name", "%ourse%");
+			List<Course> courses = (List<Course>)query.list();
+			System.out.println(courses);
+		} catch(Exception e) {
+			System.out.println(e.toString());
+		}
 	}
 
 	/*
@@ -62,7 +93,6 @@ public class Management {
 		} catch(Exception e) {
 			System.out.println(e.toString());
 		}
-		ConnectionUtil.getSessionFactory().close();
 	}
 
 	private static void createFresher() {
